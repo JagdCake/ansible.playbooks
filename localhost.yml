@@ -1,0 +1,8 @@
+---
+- hosts: localhost
+
+  tasks:
+  - name: create production directory
+    file:
+        dest: ~/Documents/web_dev/3_my_sites/data/website/public
+        state: directory
