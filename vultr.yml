@@ -1,0 +1,22 @@
+---
+- hosts: vultr
+
+  tasks:
+    - name: prevent docker-compose permission error
+      file:
+        dest: /var/run/docker.sock
+        owner: jagdcake
+
+    - name: start docker
+      service:
+        name: docker
+        state: started
+        enabled: yes
+
+    - name: install docker
+      yum:
+        name:
+          - docker
+          - docker-compose
+        state: present
+
