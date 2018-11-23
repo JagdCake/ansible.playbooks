@@ -6,3 +6,22 @@
     file:
         dest: ~/Documents/web_dev/3_my_sites/data/website/public
         state: directory
+    notify:
+      - "copy 404"
+
+  handlers:
+    - name: switch static site template to production
+      command: git checkout development
+      args:
+        chdir: ~/Documents/web_dev/1_templates/static_site/
+      listen: "copy 404"
+    - name: copy 404 page to production dir
+      copy:
+        src: ~/Documents/web_dev/1_templates/test/404.html
+        dest: ~/Documents/web_dev/3_my_sites/data/website/public/
+      listen: "copy 404"
+    - name: switch static site template back to development
+      command: git checkout development
+      args:
+        chdir: ~/Documents/web_dev/1_templates/static_site/
+      listen: "copy 404"
