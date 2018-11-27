@@ -3,3 +3,4 @@
   command: git checkout "{{ to_branch }}"
   args:
     chdir: "{{ git_repo }}"
+...
