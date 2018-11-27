@@ -1,5 +1,10 @@
 ---
 - hosts: localhost
+  vars:
+    template_git_repo: ~/Documents/web_dev/1_templates/static_site/
+    project_dir: ~/Documents/web_dev/3_my_sites/data/website/
+    production_dir: "{{ project_dir }}/public/"
+
   roles:
     - site.static.production.set_up
 ...
