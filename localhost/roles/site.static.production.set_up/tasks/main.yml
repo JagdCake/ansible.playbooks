@@ -10,7 +10,7 @@
 
 - name: copy 404 page to production dir
   copy:
-    src: "{{ git_repo }}/404.html"
+    src: "{{ template_git_repo }}/404.html"
     dest: "{{ production_dir }}"
 
 - import_tasks: switch_git_branch.yml

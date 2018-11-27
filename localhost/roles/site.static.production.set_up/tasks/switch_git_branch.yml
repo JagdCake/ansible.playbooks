@@ -2,5 +2,5 @@
 - name: switch git branch
   command: git checkout "{{ to_branch }}"
   args:
-    chdir: "{{ git_repo }}"
+    chdir: "{{ template_git_repo }}"
 ...
