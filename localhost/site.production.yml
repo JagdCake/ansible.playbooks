@@ -6,5 +6,6 @@
     production_dir: "{{ project_dir }}/public/"
 
   roles:
-    - site.static.production.set_up
+    - site.production.minify_optimize
+    # - site.static.production.set_up
 ...
