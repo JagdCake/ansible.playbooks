@@ -1,4 +1,10 @@
 ---
 - name: minify and optimize files
-  command: ~/Documents/my_github/shell_scripts/scripts/./build_web_project.sh "{{ build['filetype'] }}" "{{ build['input'] }}" "{{ build['output'] }}"
+  command:
+  args:
+    argv:
+      - ~/Documents/my_github/shell_scripts/scripts/./build_web_project.sh
+      - "{{ build['filetype'] }}"
+      - "{{ build['input'] }}"
+      - "{{ build['output'] }}"
 ...
