@@ -12,4 +12,5 @@
       - "{{ build['filetype'] }}"
       - "{{ build['input'] }}"
       - "{{ build['output'] }}"
+  ignore_errors: True
 ...
