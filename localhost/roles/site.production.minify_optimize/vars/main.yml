@@ -1,0 +1,15 @@
+---
+# key = filetype; value = directory
+static_site:
+  html: ''
+  css: 'css'
+  js: 'js'
+  svg: 'images'
+  png: 'images'
+node_app:
+  ejs: 'views'
+  css: 'public/css'
+  js: 'public/js'
+  svg: 'public/images'
+  png: 'public/images'
+...
