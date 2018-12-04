@@ -1,8 +1,8 @@
 ---
-- name: create a directory if needed
-  file:
-    dest: "{{ build['output'] }}"
-    state: directory
+# - name: create a directory if needed
+  # file:
+    # dest: "{{ build['output'] }}"
+    # state: directory
 
 - name: minify and optimize files
   command:
