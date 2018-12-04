@@ -1,0 +1,16 @@
+---
+- name: find directories in dir
+  find:
+    paths: "{{ project_dir }}"
+    file_type: directory
+    recurse: yes
+    hidden: no
+  register: found
+
+- name: create production dirs
+  file:
+    # create every directory found in the project dir, inside the production dir
+    dest: "{{ production_dir }}/{{ item.path | regex_replace(project_dir | expanduser) }}"
+    state: directory
+  loop: "{{ found.files }}"
+...
