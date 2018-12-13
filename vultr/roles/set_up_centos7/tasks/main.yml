@@ -1,3 +1,4 @@
 ---
+- import_tasks: upgrade_packages.yml
 - import_tasks: set_up_docker.yml
 ...
