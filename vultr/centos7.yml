@@ -3,6 +3,6 @@
   # run ansible-playbooks with --ask-become-pass
   become: yes
 
-  # roles:
-    # - set_up_docker
+  roles:
+    - set_up_centos7
 ...
