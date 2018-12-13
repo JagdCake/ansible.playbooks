@@ -1,5 +1,6 @@
 ---
 - hosts: vultr
+  # run ansible-playbooks with --ask-become-pass
   become: yes
 
   roles:
