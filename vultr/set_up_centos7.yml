@@ -3,6 +3,25 @@
   # run ansible-playbooks with --ask-become-pass
   become: yes
 
-  roles:
-    - set_up_docker
+  # roles:
+    # - set_up_docker
+  tasks:
+    - name: install docker
+      yum:
+        name:
+          - docker
+          - docker-compose
+        state: present
+
+    - name: prevent docker-compose permission error
+      file:
+        dest: /var/run/docker.sock
+        # run ansible-playbooks with -e 'username=[username]'
+        owner: "{{ username }}"
+
+    - name: start docker
+      service:
+        name: docker
+        state: started
+        enabled: yes
 ...
