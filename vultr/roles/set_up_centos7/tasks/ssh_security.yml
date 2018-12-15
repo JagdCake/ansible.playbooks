@@ -1,0 +1,32 @@
+---
+- name: disallow root login
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: "#PermitRootLogin yes"
+    line: "PermitRootLogin no"
+    state: present
+    # with backrefs — doesn't add the line if the regex doesn't match anything
+    backrefs: yes
+
+- name: disallow password authentication
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: "PasswordAuthentication yes"
+    line: "PasswordAuthentication no"
+    state: present
+    backrefs: yes
+
+- name: allow only the specified user to login
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    line: "AllowUsers {{ username }}"
+    state: present
+    insertafter: EOF
+
+# TODO Enhancement:
+# reload only if the config file has changed
+- name: reload sshd
+  service:
+    name: sshd
+    state: reloaded
+...
