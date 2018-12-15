@@ -1,0 +1,43 @@
+---
+- name: make sure firewalld is running and enabled
+  service:
+    name: firewalld
+    state: started
+    enabled: yes
+
+- name: remove SSH access from the public zone
+  firewalld:
+    service: ssh
+    zone: public
+    state: disabled
+    permanent: yes
+
+- name: allow access to SSH only from my IP
+  firewalld:
+    source: "{{ static_ip }}"
+    port: 22/tcp
+    zone: dmz
+    state: enabled
+    permanent: yes
+
+- name: allow HTTP traffic
+  firewalld:
+    zone: public
+    service: http
+    state: enabled
+    permanent: yes
+
+- name: allow HTTPS traffic
+  firewalld:
+    zone: public
+    service: https
+    state: enabled
+    permanent: yes
+
+# TODO Enhancement:
+# reload only if any changes have been made
+- name: reload firewalld
+  service:
+    name: firewalld
+    state: reloaded
+...
