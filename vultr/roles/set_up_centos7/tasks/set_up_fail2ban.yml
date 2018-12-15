@@ -20,6 +20,11 @@
     src: jail.local.j2
     dest: /etc/fail2ban/jail.local
 
+- name: create jail log file # shouldn't have to
+  file:
+    path: /var/log/auth.log
+    state: touch
+
 - name: reload fail2ban
   service:
     name: fail2ban
