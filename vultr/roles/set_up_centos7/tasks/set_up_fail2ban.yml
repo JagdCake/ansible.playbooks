@@ -25,6 +25,8 @@
     path: /var/log/auth.log
     state: touch
 
+# TODO Enhancement:
+# reload only if the config file has changed
 - name: reload fail2ban
   service:
     name: fail2ban
