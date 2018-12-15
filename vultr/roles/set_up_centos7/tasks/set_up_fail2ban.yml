@@ -18,7 +18,7 @@
 - name: update fail2ban config
   template:
     src: jail.local.j2
-    dest: /etc/fail2ban/
+    dest: /etc/fail2ban/jail.local
 
 - name: reload fail2ban
   service:
