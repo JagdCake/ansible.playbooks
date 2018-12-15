@@ -1,4 +1,9 @@
 ---
+- name: install release package "Extra Packages for Enterprise Linux"
+  yum:
+    name: epel-release
+    state: present
+
 - name: install fail2ban
   yum:
     name: fail2ban
