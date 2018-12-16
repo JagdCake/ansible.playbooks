@@ -6,4 +6,7 @@
 
   roles:
     - set_up_centos7
+
+  # TODO Enhancement:
+  # add a task to reboot the server with the "reboot" module (ansible 2.7)
 ...
