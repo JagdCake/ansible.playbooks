@@ -1,0 +1,8 @@
+---
+- name: set up authorized keys
+  authorized_key:
+    user: "{{ username }}"
+    state: present
+    key: "{{ lookup('file', '/home/{{ local_user }}/.ssh/id_rsa.pub') }}"
+    manage_dir: yes
+...
