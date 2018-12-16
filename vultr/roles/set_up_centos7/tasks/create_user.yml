@@ -1,0 +1,14 @@
+---
+- name: create a new user
+  user:
+    name: "{{ username }}"
+    # https://stackoverflow.com/a/29910294/8980616
+    password: "{{ password | password_hash('sha512') }}"
+    state: present
+
+- name: give the new user root privileges
+  user:
+    name: "{{ username }}"
+    groups: wheel
+    append: yes
+...
