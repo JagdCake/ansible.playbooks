@@ -20,6 +20,16 @@
     state: enabled
     permanent: yes
 
+- name: drop (no rejection reply) all non-whitelisted connections to the SSH service
+  command: "firewall-cmd --zone=public --set-target=DROP"
+
+- name: restore the ability to ping (broken by the previous task)
+  firewalld:
+    zone: dmz
+    rich_rule: 'rule protocol value="icmp" accept'
+    state: enabled
+    permanent: yes
+
 - name: allow HTTP traffic
   firewalld:
     zone: public
