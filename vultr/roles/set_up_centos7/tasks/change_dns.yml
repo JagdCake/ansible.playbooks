@@ -1,0 +1,11 @@
+---
+- name: use Cloudflare's DNS
+  blockinfile:
+    path: "/etc/sysconfig/network-scripts/ifcfg-{{ ansible_default_ipv4.interface }}"
+    block: |
+      DNS1=1.1.1.1
+      DNS2=1.0.0.1
+    insertafter: EOF 
+    state: present
+  notify: "reload network"
+...
