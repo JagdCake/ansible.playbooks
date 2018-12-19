@@ -7,6 +7,7 @@
     state: present
     # with backrefs — doesn't add the line if the regex doesn't match anything
     backrefs: yes
+  notify: "reload sshd"
 
 - name: disallow password authentication
   lineinfile:
@@ -15,6 +16,7 @@
     line: "PasswordAuthentication no"
     state: present
     backrefs: yes
+  notify: "reload sshd"
 
 - name: allow only the specified user to login
   lineinfile:
@@ -22,11 +24,5 @@
     line: "AllowUsers {{ username }}"
     state: present
     insertafter: EOF
-
-# TODO Enhancement:
-# reload only if the config file has changed
-- name: reload sshd
-  service:
-    name: sshd
-    state: reloaded
+  notify: "reload sshd"
 ...

@@ -11,6 +11,7 @@
     zone: public
     state: disabled
     permanent: yes
+  notify: "reload firewalld"
 
 - name: allow access to SSH only from my IP
   firewalld:
@@ -19,9 +20,11 @@
     zone: dmz
     state: enabled
     permanent: yes
+  notify: "reload firewalld"
 
 - name: drop (no rejection reply) all non-whitelisted connections to the SSH service
   command: "firewall-cmd --zone=public --set-target=DROP"
+  notify: "reload firewalld"
 
 - name: restore the ability to ping (broken by the previous task)
   firewalld:
@@ -29,6 +32,7 @@
     rich_rule: 'rule protocol value="icmp" accept'
     state: enabled
     permanent: yes
+  notify: "reload firewalld"
 
 - name: allow HTTP traffic
   firewalld:
@@ -36,6 +40,7 @@
     service: http
     state: enabled
     permanent: yes
+  notify: "reload firewalld"
 
 - name: allow HTTPS traffic
   firewalld:
@@ -43,11 +48,5 @@
     service: https
     state: enabled
     permanent: yes
-
-# TODO Enhancement:
-# reload only if any changes have been made
-- name: reload firewalld
-  service:
-    name: firewalld
-    state: reloaded
+  notify: "reload firewalld"
 ...

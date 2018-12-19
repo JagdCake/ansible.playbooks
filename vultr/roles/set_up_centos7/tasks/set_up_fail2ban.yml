@@ -19,16 +19,11 @@
   template:
     src: jail.local.j2
     dest: /etc/fail2ban/jail.local
+  notify: "reload fail2ban"
 
 - name: create jail log file # shouldn't have to
   file:
     path: /var/log/auth.log
     state: touch
-
-# TODO Enhancement:
-# reload only if the config file has changed
-- name: reload fail2ban
-  service:
-    name: fail2ban
-    state: reloaded
+  notify: "reload fail2ban"
 ...
