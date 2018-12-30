@@ -12,6 +12,8 @@
     state: started
     enabled: yes
 
+# TODO Fix:
+# docker.sock's owner didn't change?
 - name: prevent docker-compose permission error
   file:
     dest: /var/run/docker.sock
