@@ -7,4 +7,6 @@
 - import_tasks: set_up_fail2ban.yml
 - import_tasks: change_dns.yml
 - import_tasks: set_up_docker.yml
+- name: reboot the server
+  reboot:
 ...
