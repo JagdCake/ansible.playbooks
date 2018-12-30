@@ -1,0 +1,45 @@
+---
+# Fixes server crash on reboot # https://bugs.centos.org/view.php?id=15497
+# Source: https://plone.lucidsolutions.co.nz/linux/centos/7/install-centos-plus-kernel-kernel-plus/view
+
+- name: install yum-utils
+  yum:
+    update_cache: yes
+    name: yum-utils
+    state: present
+
+- name: make kernel-plus the default kernel
+  lineinfile:
+    path: /etc/sysconfig/kernel
+    regexp: '^DEFAULTKERNEL=kernel$'
+    line: 'DEFAULTKERNEL=kernel-plus'
+
+- name: install kernel-plus
+  yum:
+    name: kernel-plus
+    enablerepo: centosplus
+    state: present
+
+- name: remove the standard kernel tools
+  yum:
+    name:
+      - kernel-tools
+      - kernel-tools-libs
+    state: absent
+
+- name: install the kernel-plus tools
+  yum:
+    name:
+      - kernel-plus-tools
+      - kernel-plus-tools-libs
+    enablerepo: centosplus
+    state: present
+
+# TODO Fix:
+# had to do it manually, requires input
+# https://stackoverflow.com/questions/48779938/how-do-you-set-up-a-confirmation-prompt-before-running-a-task-in-a-playbook
+- name: remove the standard kernel
+  yum:
+    name: kernel
+    state: absent
+...
