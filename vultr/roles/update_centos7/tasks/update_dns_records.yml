@@ -1,0 +1,11 @@
+---
+- name: update DNS records
+  cloudflare_dns:
+    zone: "{{ record_zone }}"
+    record: "{{ record_name }}"
+    type: "{{ record_type }}"
+    value: "{{ record_value }}"
+    state: "{{ record_state }}"
+    account_email: "{{ cloudflare_email }}"
+    account_api_token: "{{ cloudflare_token }}"
+...
