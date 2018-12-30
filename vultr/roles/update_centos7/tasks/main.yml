@@ -1,0 +1,76 @@
+---
+# execute "netlify deploy --prod" from the production folder of the maintenance site (do this only once)
+# go to the admin URL and add all domains / subdomains that you want to point to the maintenance site
+
+- include_tasks: update_dns_entries.yml
+  vars:
+    record_zone: jagdcake.com
+    record_name: "{{ item }}"
+    record_type: A
+    record_value: "{{ vps_ip }}"
+    record_state: absent
+  loop:
+    - request
+    - modeling
+
+- include_tasks: update_dns_entries.yml
+  vars:
+    record_zone: jagdcake.com
+    record_name: "{{ item }}"
+    record_type: CNAME
+    record_value: "{{ netlify_subdomain }}"
+    record_state: present
+  loop:
+    - request
+    - modeling
+
+- name: stop docker containers
+  docker_container:
+    name: "{{ item }}"
+    state: stopped
+  loop:
+    - 3d-app
+    - 3d-db
+    - request-app
+    - request-db
+      
+- import_tasks: ../../set_up_centos7/tasks/upgrade_packages.yml
+
+- name: reboot the server
+  reboot:
+
+# can't access the username variable defined in the set up role, had to add the variable for this role
+- import_tasks: ../../set_up_centos7/tasks/set_up_docker.yml
+
+- name: start docker containers
+  docker_container:
+    name: "{{ item }}"
+    state: stopped
+  loop:
+    - 3d-db
+    - 3d-app
+    - request-db
+    - request-app
+
+- include_tasks: update_dns_entries.yml
+  vars:
+    record_zone: jagdcake.com
+    record_name: "{{ item }}"
+    record_type: CNAME
+    record_value: "{{ netlify_subdomain }}"
+    record_state: absent
+  loop:
+    - request
+    - modeling
+
+- include_tasks: update_dns_entries.yml
+  vars:
+    record_zone: jagdcake.com
+    record_name: "{{ item }}"
+    record_type: A
+    record_value: "{{ vps_ip }}"
+    record_state: present
+  loop:
+    - request
+    - modeling
+...
