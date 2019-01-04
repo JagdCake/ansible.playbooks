@@ -35,9 +35,9 @@
     - request-db
       
 - import_tasks: ../../set_up_centos7/tasks/upgrade_packages.yml
+  notify: "reboot the server"
 
-- name: reboot the server
-  reboot:
+- meta: flush_handlers
 
 # can't access the username variable defined in the set up role, had to add the variable for this role
 - import_tasks: ../../set_up_centos7/tasks/set_up_docker.yml
