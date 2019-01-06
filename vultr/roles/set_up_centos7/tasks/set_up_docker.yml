@@ -17,10 +17,27 @@
     state: started
     enabled: yes
 
-# TODO Fix:
-# docker.sock's owner didn't change?
-- name: prevent docker-compose permission error
-  file:
-    dest: /var/run/docker.sock
-    owner: "{{ username }}"
+# Source: https://coderleaf.wordpress.com/2017/02/10/run-docker-as-user-on-centos7/
+- name: add user to the docker group
+  user:
+    name: "{{ username }}"
+    append: yes
+    groups: dockerroot
+
+- name: change ownership of the docker daemon socket
+  lineinfile:
+    path: /etc/docker/daemon.json
+    # replace the empty object
+    regexp: '{}'
+    line: '{ "live-restore": true, "group": "dockerroot" }'
+    state: present
+    create: yes
+
+- name: restart docker
+  service:
+    name: docker
+    state: restarted
+
+- name: reset SSH connection to make sure docker error was successfully fixed
+  meta: reset_connection
 ...
