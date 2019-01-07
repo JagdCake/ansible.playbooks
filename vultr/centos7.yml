@@ -5,5 +5,5 @@
   become: yes
 
   roles:
-    - set_up_centos7
+    - centos7.set_up
 ...
