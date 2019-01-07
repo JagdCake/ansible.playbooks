@@ -2,7 +2,7 @@
 # execute "netlify deploy --prod" from the production folder of the maintenance site (do this only once)
 # go to the admin URL and add all domains / subdomains that you want to point to the maintenance site
 
-- include_tasks: update_dns_entries.yml
+- include_tasks: update_dns_records.yml
   vars:
     record_zone: jagdcake.com
     record_name: "{{ item }}"
@@ -13,7 +13,7 @@
     - request
     - modeling
 
-- include_tasks: update_dns_entries.yml
+- include_tasks: update_dns_records.yml
   vars:
     record_zone: jagdcake.com
     record_name: "{{ item }}"
@@ -52,7 +52,7 @@
     - request-db
     - request-app
 
-- include_tasks: update_dns_entries.yml
+- include_tasks: update_dns_records.yml
   vars:
     record_zone: jagdcake.com
     record_name: "{{ item }}"
@@ -63,7 +63,7 @@
     - request
     - modeling
 
-- include_tasks: update_dns_entries.yml
+- include_tasks: update_dns_records.yml
   vars:
     record_zone: jagdcake.com
     record_name: "{{ item }}"
