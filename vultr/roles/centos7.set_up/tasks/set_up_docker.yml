@@ -34,11 +34,13 @@
     # don't add the line if the regexp doesn't match
     backrefs: yes
     create: yes
+  register: the_file_was
 
 - name: restart docker
   service:
     name: docker
     state: restarted
+  when: the_file_was.changed
 
 - name: reset SSH connection to make sure docker error was successfully fixed
   meta: reset_connection
