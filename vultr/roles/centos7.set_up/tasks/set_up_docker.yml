@@ -31,6 +31,8 @@
     regexp: '{}'
     line: '{ "live-restore": true, "group": "dockerroot" }'
     state: present
+    # don't add the line if the regexp doesn't match
+    backrefs: yes
     create: yes
 
 - name: restart docker
