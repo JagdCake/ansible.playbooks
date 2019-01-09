@@ -52,6 +52,9 @@
     - request-db
     - request-app
 
+- pause:
+    prompt: "Check if the sites are up"
+
 - include_tasks: update_dns_records.yml
   vars:
     record_zone: jagdcake.com
