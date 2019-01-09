@@ -43,14 +43,13 @@
 - import_tasks: ../../centos7.set_up/tasks/set_up_docker.yml
 
 - name: start docker containers
-  docker_container:
-    name: "{{ item }}"
-    state: stopped
+  docker_service:
+    project_src: "/home/{{ lookup('env', 'USER') }}/Containers/{{ item }}/"
+    state: present
   loop:
-    - 3d-db
-    - 3d-app
-    - request-db
-    - request-app
+    - nginx-proxy
+    - request
+    - modeling
 
 - pause:
     prompt: "Check if the sites are up"
