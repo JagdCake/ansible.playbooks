@@ -25,14 +25,12 @@
     - modeling
 
 - name: stop docker containers
-  docker_container:
-    name: "{{ item }}"
-    state: stopped
+  docker_service:
+    project_src: "/home/{{ lookup('env', 'USER') }}/Containers/{{ item }}/"
+    state: absent
   loop:
-    - 3d-app
-    - 3d-db
-    - request-app
-    - request-db
+    - request
+    - modeling
       
 - import_tasks: ../../centos7.set_up/tasks/upgrade_packages.yml
   notify: "reboot the server"
