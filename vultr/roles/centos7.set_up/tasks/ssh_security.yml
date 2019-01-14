@@ -1,28 +1,12 @@
 ---
-- name: disallow root login
-  lineinfile:
-    path: /etc/ssh/sshd_config
-    regexp: "#PermitRootLogin yes"
-    line: "PermitRootLogin no"
-    state: present
-    # with backrefs — doesn't add the line if the regex doesn't match anything
-    backrefs: yes
+# Source: https://infosec.mozilla.org/guidelines/openssh
+
+- name: update SSH config
+  template:
+    src: sshd_config.j2
+    dest: /etc/ssh/sshd_config
   notify: "reload sshd"
 
-- name: disallow password authentication
-  lineinfile:
-    path: /etc/ssh/sshd_config
-    regexp: "PasswordAuthentication yes"
-    line: "PasswordAuthentication no"
-    state: present
-    backrefs: yes
-  notify: "reload sshd"
-
-- name: allow only the specified user to login
-  lineinfile:
-    path: /etc/ssh/sshd_config
-    line: "AllowUsers {{ username }}"
-    state: present
-    insertafter: EOF
-  notify: "reload sshd"
+- name: deactivate short moduli
+  shell: awk '$5 >= 3071' /etc/ssh/moduli > /etc/ssh/moduli.tmp && mv /etc/ssh/moduli.tmp /etc/ssh/moduli
 ...
