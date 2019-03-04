@@ -3,5 +3,5 @@
   yum:
     update_cache: yes
     name: '*'
-    state: latest
+    state: latest # noqa 403
 ...

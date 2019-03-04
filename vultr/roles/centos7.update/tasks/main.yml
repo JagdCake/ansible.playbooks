@@ -49,7 +49,7 @@
     - request
     - modeling
 
-- pause:
+- pause: # noqa 502
     prompt: "Check if the sites are up"
 
 - include_tasks: update_dns_records.yml

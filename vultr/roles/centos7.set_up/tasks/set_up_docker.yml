@@ -36,7 +36,7 @@
     create: yes
   register: the_file_was
 
-- name: restart docker
+- name: restart docker # noqa 503
   service:
     name: docker
     state: restarted
