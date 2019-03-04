@@ -31,7 +31,7 @@
   loop:
     - request
     - modeling
-      
+
 - import_tasks: ../../centos7.set_up/tasks/upgrade_packages.yml
   notify: "reboot the server"
 
