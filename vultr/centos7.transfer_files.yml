@@ -17,7 +17,7 @@
     archive:
       # removing the wildcard from path makes it so that node_modules doesn't get excluded
       path: "{{ local_project_dir }}/*"
-      dest: "{{ local_project_dir }}/files.tar.gz"
+      dest: "{{ local_project_dir }}/project_files.tar.gz"
       # Wait for merge https://github.com/ansible/ansible/pull/34659
       # Source: https://github.com/ansible/ansible/issues/34316
       exclude_path:
@@ -49,7 +49,7 @@
 
   - name: unarchive files on the server
     unarchive:
-      src: "{{ hostvars.localhost.local_project_dir }}/files.tar.gz"
+      src: "{{ hostvars.localhost.local_project_dir }}/project_files.tar.gz"
       dest: "{{ remote_projects_dir }}/{{ project_name }}/"
       # owner and group of all directories (only) is root
       owner: "{{ lookup('env', 'USER') }}"
