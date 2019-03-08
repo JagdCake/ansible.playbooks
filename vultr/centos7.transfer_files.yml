@@ -46,4 +46,12 @@
       state: directory
       owner: "{{ lookup('env', 'USER') }}"
       group: "{{ lookup('env', 'USER') }}"
+
+  - name: unarchive files on the server
+    unarchive:
+      src: "{{ hostvars.localhost.local_project_dir }}/files.tar.gz"
+      dest: "{{ remote_projects_dir }}/{{ project_name }}/"
+      # owner and group of all directories (only) is root
+      owner: "{{ lookup('env', 'USER') }}"
+      group: "{{ lookup('env', 'USER') }}"
 ...
