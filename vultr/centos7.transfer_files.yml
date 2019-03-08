@@ -1,5 +1,6 @@
 ---
 # the archive module can only be used on the local machine
+# still have to run ansible-playbooks with --ask-become-pass
 - hosts: localhost
 
   vars_prompt:
@@ -21,4 +22,24 @@
       - "{{ local_project_dir }}/docker_volumes/data/"
       - "{{ local_project_dir }}/node_modules"
       - "{{ local_project_dir }}/TODO"
+
+- hosts: vultr
+  become: yes
+
+  vars:
+    remote_projects_dir: "/home/{{ lookup('env', 'USER') }}/Containers/"
+
+  vars_prompt:
+  - name: "project_name"
+    prompt: enter project name
+    private: no
+    confirm: yes
+
+  tasks:
+  - name: create a directory for the project on the server
+    file:
+      path: "{{ remote_projects_dir }}/{{ project_name }}"
+      state: directory
+      owner: "{{ lookup('env', 'USER') }}"
+      group: "{{ lookup('env', 'USER') }}"
 ...
