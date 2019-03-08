@@ -5,4 +5,8 @@
 
   roles:
     - centos7.update
+
+  # upgrade packages only
+  # tasks:
+  # - import_tasks: ./roles/centos7.set_up/tasks/upgrade_packages.yml
 ...
