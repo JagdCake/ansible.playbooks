@@ -9,6 +9,10 @@
     private: no
     confirm: yes
 
+  tasks:
+  - name: register project directory variable
+    set_fact: "local_project_dir={{ local_project_dir }}"
+
   - name: archive project files and directories
     archive:
       # removing the wildcard from path makes it so that node_modules doesn't get excluded
