@@ -1,0 +1,24 @@
+---
+# the archive module can only be used on the local machine
+- hosts: localhost
+
+  vars_prompt:
+  - name: "local_project_dir"
+    prompt: enter path to project directory
+    private: no
+    confirm: yes
+
+  - name: archive project files and directories
+    archive:
+      # removing the wildcard from path makes it so that node_modules doesn't get excluded
+      path: "{{ local_project_dir }}/*"
+      dest: "{{ local_project_dir }}/files.tar.gz"
+      # Wait for merge https://github.com/ansible/ansible/pull/34659
+      # Source: https://github.com/ansible/ansible/issues/34316
+      exclude_path:
+      # directories are excluded only if there is no trailing slash,
+      # a nested directory (itself) is never excluded, trailing slash or no, but files inside of it are, directories aren't
+      - "{{ local_project_dir }}/docker_volumes/data/"
+      - "{{ local_project_dir }}/node_modules"
+      - "{{ local_project_dir }}/TODO"
+...
