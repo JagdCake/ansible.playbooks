@@ -23,7 +23,7 @@
   notify: "reload firewalld"
 
 - name: drop (no rejection reply) all non-whitelisted connections to the SSH service
-  command: "firewall-cmd --zone=public --set-target=DROP"
+  command: "firewall-cmd --zone=public --set-target=DROP --permanent"
   notify: "reload firewalld"
 
 - name: restore the ability to ping (broken by the previous task)
