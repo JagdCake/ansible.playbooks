@@ -37,9 +37,6 @@
 
 - meta: flush_handlers
 
-# can't access the username variable defined in the set up role, had to add the variable for this role
-- import_tasks: ../../centos7.set_up/tasks/set_up_docker.yml
-
 - name: start docker containers
   docker_service:
     project_src: "/home/{{ lookup('env', 'USER') }}/Containers/{{ item }}/"
