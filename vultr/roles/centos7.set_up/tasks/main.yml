@@ -2,7 +2,7 @@
 - import_tasks: create_user.yml
 - import_tasks: set_up_ssh.yml
 - import_tasks: ssh_security.yml
-- import_tasks: set_up_firewalld.yml
+# - import_tasks: set_up_firewalld.yml
 - import_tasks: upgrade_packages.yml
 - import_tasks: set_up_fail2ban.yml
 - import_tasks: change_dns.yml
