@@ -7,7 +7,7 @@
     record_zone: jagdcake.com
     record_name: "{{ item }}"
     record_type: A
-    record_value: "{{ vps_ip }}"
+    record_value: "{{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}"
     record_state: absent
   loop:
     - request
@@ -65,7 +65,7 @@
     record_zone: jagdcake.com
     record_name: "{{ item }}"
     record_type: A
-    record_value: "{{ vps_ip }}"
+    record_value: "{{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}"
     record_state: present
   loop:
     - request
