@@ -25,7 +25,7 @@
     - modeling
 
 - name: stop docker containers
-  docker_service:
+  docker_compose:
     project_src: "/home/{{ lookup('env', 'USER') }}/Containers/{{ item }}/"
     state: absent
   loop:
@@ -38,7 +38,7 @@
 - meta: flush_handlers
 
 - name: start docker containers
-  docker_service:
+  docker_compose:
     project_src: "/home/{{ lookup('env', 'USER') }}/Containers/{{ item }}/"
     state: present
   loop:
