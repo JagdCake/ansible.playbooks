@@ -10,7 +10,6 @@
     record_value: "{{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}"
     record_state: absent
   loop:
-    - request
     - modeling
 
 - include_tasks: update_dns_records.yml
@@ -21,7 +20,6 @@
     record_value: "{{ netlify_subdomain }}"
     record_state: present
   loop:
-    - request
     - modeling
 
 - name: stop docker containers
@@ -29,7 +27,6 @@
     project_src: "/home/{{ lookup('env', 'USER') }}/Containers/{{ item }}/"
     state: absent
   loop:
-    - request
     - modeling
 
 - import_tasks: ../../centos7.set_up/tasks/upgrade_packages.yml
@@ -43,7 +40,6 @@
     state: present
   loop:
     - nginx-proxy
-    - request
     - modeling
 
 - pause: # noqa 502
@@ -57,7 +53,6 @@
     record_value: "{{ netlify_subdomain }}"
     record_state: absent
   loop:
-    - request
     - modeling
 
 - include_tasks: update_dns_records.yml
@@ -68,6 +63,5 @@
     record_value: "{{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}"
     record_state: present
   loop:
-    - request
     - modeling
 ...
