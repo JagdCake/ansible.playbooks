@@ -1,0 +1,6 @@
+---
+- name: install OpenVPN
+  yum:
+    name: openvpn
+    state: latest
+...
