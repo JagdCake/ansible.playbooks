@@ -1,0 +1,6 @@
+---
+- name: install OpenVPN
+  command: eopkg it openvpn
+  args:
+    creates: /usr/sbin/openvpn
+...
