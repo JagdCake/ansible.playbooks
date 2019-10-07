@@ -1,0 +1,9 @@
+---
+- hosts: linode
+  # if a non-root user hasn't been created when installing, run ansible-playbooks with "--user root --ask-pass" (sshpass needs to be installed on the control machine)
+  # otherwise, run "ansible-playbooks with --ask-become-pass" and uncomment the next line
+  become: yes
+
+  roles:
+    - centos8.openvpn
+...
