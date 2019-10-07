@@ -37,4 +37,13 @@
   file:
     path: "{{ download.dest }}"
     state: absent
+
+# needed for setting up a certificate authority
+- name: initialize public key infrastructure
+  command: ./easyrsa init-pki
+  args:
+    # cd into the directory created after unarchiving
+    # the first file in the list is the root EasyRSA directory
+    chdir: "/etc/openvpn/{{ easyrsa.files[0] }}"
+    creates: "/etc/openvpn/{{ easyrsa.files[0] }}/pki/"
 ...
