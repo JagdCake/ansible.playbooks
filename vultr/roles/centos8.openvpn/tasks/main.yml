@@ -47,6 +47,12 @@
     chdir: "/etc/openvpn/{{ easyrsa.files[0] }}"
     creates: "/etc/openvpn/{{ easyrsa.files[0] }}/pki/"
 
+# needed for the "expect" module to work
+- name: install pexpect
+  yum:
+    name: python3-pexpect
+    state: installed
+
 - name: create certificate authority
   expect:
     command: ./easyrsa build-ca
