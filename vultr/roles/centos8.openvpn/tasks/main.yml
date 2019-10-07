@@ -33,16 +33,6 @@
     list_files: yes
   register: easyrsa
 
-- name: make me the owner of the EasyRSA directory
-  file:
-    # the first file in the list is the root EasyRSA directory
-    path: "/etc/openvpn/{{ easyrsa.files[0] }}"
-    state: directory
-    owner: "{{ username }}"
-    group: "{{ username }}"
-    mode: 0740
-    recurse: yes
-
 - name: delete the EasyRSA archive
   file:
     path: "{{ download.dest }}"
