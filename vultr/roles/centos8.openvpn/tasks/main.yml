@@ -53,6 +53,14 @@
     name: python3-pexpect
     state: installed
 
+# prevents error when creating certificate authority
+# Source: https://security.stackexchange.com/a/177512/166908
+- name: generate OpenSSL randfile
+  command: dd if=/dev/urandom of=pki/.rnd bs=256 count=1
+  args:
+    chdir: "/etc/openvpn/{{ easyrsa.files[0] }}"
+    creates: "/etc/openvpn/{{ easyrsa.files[0] }}/pki/.rnd"
+
 - name: create certificate authority
   expect:
     command: ./easyrsa build-ca
