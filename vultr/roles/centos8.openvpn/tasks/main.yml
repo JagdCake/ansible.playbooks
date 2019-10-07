@@ -23,4 +23,14 @@
   yum:
     name: tar
     state: latest
+
+- name: unarchive EasyRSA
+  unarchive:
+    remote_src: yes
+    src: "{{ download.dest }}"
+    dest: /etc/openvpn
+    # makes the list of unarchived files accessible to the registered variable
+    list_files: yes
+  register: easyrsa
+
 ...
