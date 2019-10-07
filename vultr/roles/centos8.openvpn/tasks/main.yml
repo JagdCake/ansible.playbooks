@@ -46,4 +46,15 @@
     # the first file in the list is the root EasyRSA directory
     chdir: "/etc/openvpn/{{ easyrsa.files[0] }}"
     creates: "/etc/openvpn/{{ easyrsa.files[0] }}/pki/"
+
+- name: create certificate authority
+  expect:
+    command: ./easyrsa build-ca
+    responses:
+      .*Enter.*\sPassphrase:\s$: "{{ ca_key_passphrase }}"
+      .*Re-Enter.*\sPassphrase:\s$: "{{ ca_key_passphrase }}"
+      .*Common\sName.*: "{{ username }}"
+  args:
+    chdir: "/etc/openvpn/{{ easyrsa.files[0] }}"
+    creates: "/etc/openvpn/{{ easyrsa.files[0] }}/pki/ca.crt"
 ...
