@@ -42,4 +42,9 @@
     group: "{{ username }}"
     mode: 0740
     recurse: yes
+
+- name: delete the EasyRSA archive
+  file:
+    path: "{{ download.dest }}"
+    state: absent
 ...
