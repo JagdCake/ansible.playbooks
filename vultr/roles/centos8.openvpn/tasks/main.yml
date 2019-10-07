@@ -33,7 +33,7 @@
     list_files: yes
   register: easyrsa
 
-- name: make me an owner of the EasyRSA directory
+- name: make me the owner of the EasyRSA directory
   file:
     # the first file in the list is the root EasyRSA directory
     path: "/etc/openvpn/{{ easyrsa.files[0] }}"
