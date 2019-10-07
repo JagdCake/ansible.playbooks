@@ -18,4 +18,9 @@
     url: https://github.com/OpenVPN/easy-rsa/releases/download/v3.0.6/EasyRSA-unix-v3.0.6.tgz
     dest: /etc/openvpn/easyrsa.tgz
   register: download
+
+- name: install tar
+  yum:
+    name: tar
+    state: latest
 ...
