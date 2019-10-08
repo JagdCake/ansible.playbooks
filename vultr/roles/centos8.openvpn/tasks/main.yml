@@ -77,4 +77,10 @@
     src: "/home/{{ username }}/Documents/{{ easyrsa.files[0] }}/pki/reqs/{{ client_entity_name }}.req"
     dest: "/tmp/{{ client_entity_name }}.req"
   register: cert_req
+
+- name: import client's certificate request
+  command: ./easyrsa import-req "{{ cert_req.dest }}" "{{ client_entity_name }}"
+  args:
+    chdir: "/etc/openvpn/{{ easyrsa.files[0] }}"
+    creates: "/etc/openvpn/{{ easyrsa.files[0] }}/pki/reqs/{{ client_entity_name }}.req"
 ...
