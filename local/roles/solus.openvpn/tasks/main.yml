@@ -52,4 +52,9 @@
   args:
     chdir: "/home/{{ username }}/Documents/{{ easyrsa.files[0] }}"
     creates: "/home/{{ username }}/Documents/{{ easyrsa.files[0] }}/pki/reqs/{{ entity_name }}.req"
+
+- name: create a directory for OpenVPN on the client
+  file:
+    path: "{{ openvpn_client_dir }}"
+    state: directory
 ...
