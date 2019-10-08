@@ -3,4 +3,12 @@
   command: eopkg it openvpn
   args:
     creates: /usr/sbin/openvpn
+
+# download EasyRSA
+# utility used to create a PKI and generate certificate requests
+- name: download EasyRSA
+  get_url:
+    url: https://github.com/OpenVPN/easy-rsa/releases/download/v3.0.6/EasyRSA-unix-v3.0.6.tgz
+    dest: "/home/{{ username }}/Documents/easyrsa.tgz"
+  register: download
 ...
