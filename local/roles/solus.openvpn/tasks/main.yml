@@ -20,4 +20,9 @@
     # makes the list of unarchived files accessible to the registered variable
     list_files: yes
   register: easyrsa
+
+- name: delete the EasyRSA archive
+  file:
+    path: "{{ download.dest }}"
+    state: absent
 ...
