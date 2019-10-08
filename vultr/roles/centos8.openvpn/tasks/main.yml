@@ -71,4 +71,10 @@
   args:
     chdir: "/etc/openvpn/{{ easyrsa.files[0] }}"
     creates: "/etc/openvpn/{{ easyrsa.files[0] }}/pki/ca.crt"
+
+- name: transport client's certificate request
+  copy:
+    src: "/home/{{ username }}/Documents/{{ easyrsa.files[0] }}/pki/reqs/{{ client_entity_name }}.req"
+    dest: "/tmp/{{ client_entity_name }}.req"
+  register: cert_req
 ...
