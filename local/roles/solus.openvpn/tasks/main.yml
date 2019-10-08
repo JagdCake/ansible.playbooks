@@ -25,4 +25,13 @@
   file:
     path: "{{ download.dest }}"
     state: absent
+
+# needed for generating certificate requests
+- name: initialize public key infrastructure
+  command: ./easyrsa init-pki
+  args:
+    # cd into the directory created after unarchiving
+    # the first file in the list is the root EasyRSA directory
+    chdir: "/home/{{ username }}/Documents/{{ easyrsa.files[0] }}"
+    creates: "/home/{{ username }}/Documents/{{ easyrsa.files[0] }}/pki/"
 ...
