@@ -83,4 +83,16 @@
   args:
     chdir: "/etc/openvpn/{{ easyrsa.files[0] }}"
     creates: "/etc/openvpn/{{ easyrsa.files[0] }}/pki/reqs/{{ client_entity_name }}.req"
+
+- name: sign client's certificate request
+  expect:
+    command: ./easyrsa sign-req client "{{ client_entity_name }}"
+    responses:
+      .*Confirm.*:\s$: "yes"
+      # note that some of the prompts don't end with whitespace
+      # could be changed in a future version
+      .*Enter.*ca.key:$: "{{ ca_key_passphrase }}"
+  args:
+    chdir: "/etc/openvpn/{{ easyrsa.files[0] }}"
+    creates: "/etc/openvpn/{{ easyrsa.files[0] }}/pki/issued/{{ client_entity_name }}.crt"
 ...
