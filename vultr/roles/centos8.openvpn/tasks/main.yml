@@ -103,4 +103,10 @@
     # so that the file is fetched into it
     dest: "{{ openvpn_client_dir }}/"
     flat: yes
+
+- name: transfer CA certificate to client
+  fetch:
+    src: "/etc/openvpn/{{ easyrsa.files[0] }}/pki/ca.crt"
+    dest: "{{ openvpn_client_dir }}/"
+    flat: yes
 ...
