@@ -34,4 +34,11 @@
     # the first file in the list is the root EasyRSA directory
     chdir: "/home/{{ username }}/Documents/{{ easyrsa.files[0] }}"
     creates: "/home/{{ username }}/Documents/{{ easyrsa.files[0] }}/pki/"
+
+# needed for the "expect" module to work
+- name: install pexpect
+  pip:
+    name: pexpect
+    extra_args: --user
+    executable: pip3.6
 ...
