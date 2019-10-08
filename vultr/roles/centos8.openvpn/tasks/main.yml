@@ -95,4 +95,12 @@
   args:
     chdir: "/etc/openvpn/{{ easyrsa.files[0] }}"
     creates: "/etc/openvpn/{{ easyrsa.files[0] }}/pki/issued/{{ client_entity_name }}.crt"
+
+- name: transfer signed certificate to client
+  fetch:
+    src: "/etc/openvpn/{{ easyrsa.files[0] }}/pki/issued/{{ client_entity_name }}.crt"
+    # destination dir must end with a "/"
+    # so that the file is fetched into it
+    dest: "{{ openvpn_client_dir }}/"
+    flat: yes
 ...
