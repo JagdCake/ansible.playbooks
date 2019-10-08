@@ -11,4 +11,13 @@
     url: https://github.com/OpenVPN/easy-rsa/releases/download/v3.0.6/EasyRSA-unix-v3.0.6.tgz
     dest: "/home/{{ username }}/Documents/easyrsa.tgz"
   register: download
+
+- name: unarchive EasyRSA
+  unarchive:
+    remote_src: yes
+    src: "{{ download.dest }}"
+    dest: "/home/{{ username }}/Documents"
+    # makes the list of unarchived files accessible to the registered variable
+    list_files: yes
+  register: easyrsa
 ...
