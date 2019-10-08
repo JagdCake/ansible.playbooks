@@ -57,4 +57,9 @@
   file:
     path: "{{ openvpn_client_dir }}"
     state: directory
+
+- name: transfer client config file to client's OpenVPN directory
+  template:
+    src: client.conf.j2
+    dest: "{{ openvpn_client_dir }}/client.conf"
 ...
