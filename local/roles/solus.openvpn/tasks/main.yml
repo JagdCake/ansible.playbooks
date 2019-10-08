@@ -46,6 +46,8 @@
   expect:
     command: ./easyrsa gen-req "{{ entity_name }}"
     responses:
+      # note that some of the prompts don't end with whitespace
+      # could be changed in a future version
       .*Enter\sPEM\spass.*:$: "{{ pem_passphrase }}"
       .*Verifying.*\sphrase:\s$: "{{ pem_passphrase }}"
       .*Common\sName.*: "{{ entity_name }}"
