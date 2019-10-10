@@ -23,4 +23,9 @@
   args:
     chdir: "/etc/openvpn/{{ easyrsa.files[0] }}"
     creates: "/etc/openvpn/{{ easyrsa.files[0] }}/pki/issued/{{ server_entity_name }}.crt"
+
+- name: transfer server config file to the OpenVPN server dir
+  template:
+    src: server.conf.j2
+    dest: "/etc/openvpn/server/server.conf"
 ...
