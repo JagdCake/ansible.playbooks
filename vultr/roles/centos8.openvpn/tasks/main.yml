@@ -109,4 +109,6 @@
     src: "/etc/openvpn/{{ easyrsa.files[0] }}/pki/ca.crt"
     dest: "{{ openvpn_client_dir }}/"
     flat: yes
+
+- import_tasks: config_vpn_server.yml
 ...
