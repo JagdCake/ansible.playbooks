@@ -1,0 +1,14 @@
+---
+- name: generate certificate request
+  expect:
+    command: ./easyrsa gen-req "{{ server_entity_name }}"
+    responses:
+      # note that some of the prompts don't end with whitespace
+      # could be changed in a future version
+      .*Enter\sPEM\spass.*:$: "{{ pem_passphrase }}"
+      .*Verifying.*\sphrase:\s$: "{{ pem_passphrase }}"
+      .*Common\sName.*: "{{ server_entity_name }}"
+  args:
+    chdir: "/etc/openvpn/{{ easyrsa.files[0] }}"
+    creates: "/etc/openvpn/{{ easyrsa.files[0] }}/pki/reqs/{{ server_entity_name }}.req"
+...
