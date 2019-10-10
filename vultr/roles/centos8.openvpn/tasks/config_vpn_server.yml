@@ -35,4 +35,14 @@
   args:
     chdir: "/etc/openvpn/{{ easyrsa.files[0] }}"
     creates: "/etc/openvpn/{{ easyrsa.files[0] }}/pki/dh.pem"
+
+- name: archive server config dependencies for transfer
+  archive:
+    path:
+      - "/etc/openvpn/{{ easyrsa.files[0] }}/pki/ca.crt"
+      - "/etc/openvpn/{{ easyrsa.files[0] }}/pki/issued/{{ server_entity_name }}.crt"
+      - "/etc/openvpn/{{ easyrsa.files[0] }}/pki/private/{{ server_entity_name }}.key"
+      - "/etc/openvpn/{{ easyrsa.files[0] }}/pki/dh.pem"
+    dest: "/etc/openvpn/server/config_dependencies.tar.gz"
+  register: dependencies
 ...
