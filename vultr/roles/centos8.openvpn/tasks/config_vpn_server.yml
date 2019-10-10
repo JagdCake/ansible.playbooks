@@ -38,4 +38,5 @@
   args:
     chdir: "/etc/openvpn/server"
     creates: "/etc/openvpn/server/{{ tls_key_name }}.tlsauth"
+  notify: "transfer TLS key to client"
 ...
