@@ -45,4 +45,10 @@
       - "/etc/openvpn/{{ easyrsa.files[0] }}/pki/dh.pem"
     dest: "/etc/openvpn/server/config_dependencies.tar.gz"
   register: dependencies
+
+- name: unarchive server config dependencies
+  unarchive:
+    remote_src: yes
+    src: "{{ dependencies.dest }}"
+    dest: /etc/openvpn/server
 ...
