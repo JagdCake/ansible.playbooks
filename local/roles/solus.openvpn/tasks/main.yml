@@ -6,14 +6,5 @@
 
 # makes sure the client can get certified to connect to the VPN server
 - import_tasks: set_up_vpn_client.yml
-
-- name: create a directory for OpenVPN on the client
-  file:
-    path: "{{ openvpn_client_dir }}"
-    state: directory
-
-- name: transfer client config file to client's OpenVPN directory
-  template:
-    src: client.conf.j2
-    dest: "{{ openvpn_client_dir }}/client.conf"
+- import_tasks: config_vpn_client.yml
 ...
