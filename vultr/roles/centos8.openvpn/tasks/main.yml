@@ -15,5 +15,7 @@
 - import_tasks: set_up_pki_ca.yml
 # makes sure the client machine can connect to the OpenVPN server
 - import_tasks: certify_client.yml
+# makes sure the server can be used as a VPN server
+- import_tasks: certify_server.yml
 - import_tasks: config_vpn_server.yml
 ...
