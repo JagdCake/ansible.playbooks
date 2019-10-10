@@ -7,6 +7,7 @@
   vars_prompt:
     - name: "client_ready"
       prompt: "Confirm you've successfully installed and configured OpenVPN on the client machine (Y/N)"
+      private: no
 
   roles:
     - role: centos8.openvpn
