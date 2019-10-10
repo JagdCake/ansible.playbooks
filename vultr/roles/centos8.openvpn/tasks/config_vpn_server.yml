@@ -51,4 +51,11 @@
     remote_src: yes
     src: "{{ dependencies.dest }}"
     dest: /etc/openvpn/server
+
+# needed by OpenVPN to enable TLS authentication
+- name: generate static encryption key
+  command: openvpn --genkey --secret "./{{ tls_key_name }}.tlsauth"
+  args:
+    chdir: "/etc/openvpn/server"
+    creates: "/etc/openvpn/server/{{ tls_key_name }}.tlsauth"
 ...
