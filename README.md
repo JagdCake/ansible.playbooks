@@ -1,5 +1,3 @@
-### Description
-My [Ansible](https://www.ansible.com/) playbooks, used mainly for automating the set up and maintenance of a CentOS 7 VPS.
-
-### Current state
-[vultr](./vultr) playbooks are what I'm focused on. Tested on a virtual machine and used on a production server, still have some things to work out.
+### Directory structure
+1. [local](./local) is used for playbooks that execute tasks on the host or my personal machine. Currently contains a single playbook for installing and setting up OpenVPN.
+2. [remote](./remote) playbooks execute tasks on remote servers / virtual machines. Mainly used on a CentOS 7 VPS; most of the tasks work fine on CentOS 8 too. Playbooks prepended with `centos7` need some work, while the playbook which sets up an OpenVPN server is pretty much done.
