@@ -27,4 +27,12 @@
 
 - name: reload firewalld
   command: firewall-cmd --reload
+
+# route all traffic from the client's IP to the server's
+- name: enable IP forwarding
+  sysctl:
+    name: net.ipv4.ip_forward
+    value: 1
+    state: present
+    reload: yes
 ...
