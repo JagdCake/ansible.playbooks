@@ -18,4 +18,5 @@
 # makes sure the server can be used as a VPN server
 - import_tasks: certify_server.yml
 - import_tasks: config_vpn_server.yml
+- import_tasks: config_vpn_routing.yml
 ...
