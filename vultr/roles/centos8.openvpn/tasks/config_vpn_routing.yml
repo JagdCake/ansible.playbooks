@@ -16,4 +16,12 @@
 
 - name: route connections to the OpenVPN subnet
   command: "firewall-cmd --permanent --direct --passthrough ipv4 -t nat -A POSTROUTING -s {{ vpn_subnet }}/24 -o {{ server_ip }} -j MASQUERADE"
+
+- name: restore the default target of the public zone
+  command:
+    argv:
+      - firewall-cmd
+      - --zone=public
+      - --set-target=default
+      - --permanent
 ...
