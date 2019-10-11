@@ -13,4 +13,7 @@
     zone: public
     state: enabled
     permanent: yes
+
+- name: route connections to the OpenVPN subnet
+  command: "firewall-cmd --permanent --direct --passthrough ipv4 -t nat -A POSTROUTING -s {{ vpn_subnet }}/24 -o {{ server_ip }} -j MASQUERADE"
 ...
