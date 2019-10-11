@@ -78,8 +78,8 @@ dev tun
 # Key and certificate files should be moved from the
 # EasyRSA directory into OpenVPN's "server" dir.
 ca ca.crt
-cert issued/server.crt
-key private/server.key  # This file should be kept secret
+cert issued/{{ server_entity_name }}.crt
+key private/{{ server_entity_name }}.key  # This file should be kept secret
 
 # Diffie hellman parameters.
 # Generate your own with:
