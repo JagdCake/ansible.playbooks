@@ -1,0 +1,8 @@
+---
+- name: allow OpenVPN through the firewall
+  firewalld:
+    service: openvpn
+    zone: public
+    state: enabled
+    permanent: yes
+...
