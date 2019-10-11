@@ -1,0 +1,16 @@
+---
+- name: create a directory for OpenVPN
+  file:
+    path: "{{ openvpn_client_dir }}"
+    state: directory
+
+- name: transfer client config file to OpenVPN directory
+  template:
+    src: client.conf.j2
+    dest: "{{ openvpn_client_dir }}/client.conf"
+
+- name: transfer client key file to OpenVPN directory
+  copy:
+    src: "/home/{{ username }}/Documents/{{ easyrsa.files[0] }}/pki/private/{{ entity_name }}.key"
+    dest: "{{ openvpn_client_dir }}/{{ entity_name }}.key"
+...

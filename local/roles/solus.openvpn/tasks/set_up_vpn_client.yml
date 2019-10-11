@@ -1,0 +1,52 @@
+---
+# download EasyRSA
+# utility used to create a PKI and generate certificate requests
+- name: download EasyRSA
+  get_url:
+    url: https://github.com/OpenVPN/easy-rsa/releases/download/v3.0.6/EasyRSA-unix-v3.0.6.tgz
+    dest: "/home/{{ username }}/Documents/easyrsa.tgz"
+  register: download
+
+- name: unarchive EasyRSA
+  unarchive:
+    remote_src: yes
+    src: "{{ download.dest }}"
+    dest: "/home/{{ username }}/Documents"
+    # makes the list of unarchived files accessible to the registered variable
+    list_files: yes
+  register: easyrsa
+
+- name: delete the EasyRSA archive
+  file:
+    path: "{{ download.dest }}"
+    state: absent
+
+# needed for generating certificate requests
+- name: initialize public key infrastructure
+  command: ./easyrsa init-pki
+  args:
+    # cd into the directory created after unarchiving
+    # the first file in the list is the root EasyRSA directory
+    chdir: "/home/{{ username }}/Documents/{{ easyrsa.files[0] }}"
+    creates: "/home/{{ username }}/Documents/{{ easyrsa.files[0] }}/pki/"
+
+# needed for the "expect" module to work
+- name: install pexpect
+  pip:
+    name: pexpect
+    extra_args: --user
+    executable: pip3.6
+
+- name: generate certificate request
+  expect:
+    command: ./easyrsa gen-req "{{ entity_name }}"
+    responses:
+      # note that some of the prompts don't end with whitespace
+      # could be changed in a future version
+      .*Enter\sPEM\spass.*:$: "{{ pem_passphrase }}"
+      .*Verifying.*\sphrase:\s$: "{{ pem_passphrase }}"
+      .*Common\sName.*: "{{ entity_name }}"
+  args:
+    chdir: "/home/{{ username }}/Documents/{{ easyrsa.files[0] }}"
+    creates: "/home/{{ username }}/Documents/{{ easyrsa.files[0] }}/pki/reqs/{{ entity_name }}.req"
+...

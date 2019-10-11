@@ -1,0 +1,11 @@
+---
+- name: install OpenVPN
+  command: eopkg it openvpn
+  args:
+    creates: /usr/sbin/openvpn
+  become: yes
+
+# makes sure the client can get certified to connect to the VPN server
+- import_tasks: set_up_vpn_client.yml
+- import_tasks: config_vpn_client.yml
+...

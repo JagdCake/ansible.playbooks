@@ -1,0 +1,7 @@
+---
+- name: transfer TLS key to client
+  fetch:
+    src: "/etc/openvpn/server/{{ tls_key_name }}.tlsauth"
+    dest: "{{ openvpn_client_dir }}/"
+    flat: yes
+...

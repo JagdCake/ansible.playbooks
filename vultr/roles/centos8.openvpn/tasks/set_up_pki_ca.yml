@@ -1,0 +1,62 @@
+---
+# download EasyRSA
+# utility used to generate and sign PKI certificates used by OpenVPN
+- name: download EasyRSA
+  get_url:
+    url: https://github.com/OpenVPN/easy-rsa/releases/download/v3.0.6/EasyRSA-unix-v3.0.6.tgz
+    dest: /etc/openvpn/easyrsa.tgz
+  register: download
+
+- name: install tar
+  yum:
+    name: tar
+    state: installed
+
+- name: unarchive EasyRSA
+  unarchive:
+    remote_src: yes
+    src: "{{ download.dest }}"
+    dest: /etc/openvpn
+    # makes the list of unarchived files accessible to the registered variable
+    list_files: yes
+  register: easyrsa
+
+- name: delete the EasyRSA archive
+  file:
+    path: "{{ download.dest }}"
+    state: absent
+
+# needed for setting up a certificate authority
+- name: initialize public key infrastructure
+  command: ./easyrsa init-pki
+  args:
+    # cd into the directory created after unarchiving
+    # the first file in the list is the root EasyRSA directory
+    chdir: "/etc/openvpn/{{ easyrsa.files[0] }}"
+    creates: "/etc/openvpn/{{ easyrsa.files[0] }}/pki/"
+
+# needed for the "expect" module to work
+- name: install pexpect
+  yum:
+    name: python3-pexpect
+    state: installed
+
+# prevents error when creating certificate authority
+# Source: https://security.stackexchange.com/a/177512/166908
+- name: generate OpenSSL randfile
+  command: dd if=/dev/urandom of=pki/.rnd bs=256 count=1
+  args:
+    chdir: "/etc/openvpn/{{ easyrsa.files[0] }}"
+    creates: "/etc/openvpn/{{ easyrsa.files[0] }}/pki/.rnd"
+
+- name: create certificate authority
+  expect:
+    command: ./easyrsa build-ca
+    responses:
+      .*Enter.*\sPassphrase:\s$: "{{ ca_key_passphrase }}"
+      .*Re-Enter.*\sPassphrase:\s$: "{{ ca_key_passphrase }}"
+      .*Common\sName.*: "{{ username }}"
+  args:
+    chdir: "/etc/openvpn/{{ easyrsa.files[0] }}"
+    creates: "/etc/openvpn/{{ easyrsa.files[0] }}/pki/ca.crt"
+...
