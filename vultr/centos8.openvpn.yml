@@ -5,11 +5,15 @@
   become: yes
 
   vars_prompt:
+    - name: "server_set_up"
+      prompt: "Confirm you've set up the server by executing ./centos7.set_up.yml (Y/N)"
+      private: no
+
     - name: "client_ready"
       prompt: "Confirm you've successfully installed and configured OpenVPN on the client machine (Y/N)"
       private: no
 
   roles:
     - role: centos8.openvpn
-      when: client_ready == "Y"
+      when: server_set_up == "Y" and client_ready == "Y"
 ...
