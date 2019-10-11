@@ -24,4 +24,7 @@
       - --zone=public
       - --set-target=default
       - --permanent
+
+- name: reload firewalld
+  command: firewall-cmd --reload
 ...
