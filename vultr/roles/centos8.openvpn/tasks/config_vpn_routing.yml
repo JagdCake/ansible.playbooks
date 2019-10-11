@@ -5,4 +5,12 @@
     zone: public
     state: enabled
     permanent: yes
+
+# hides the internal addresses behind the public IP
+- name: enable masquerading for the public zone
+  firewalld:
+    masquerade: yes
+    zone: public
+    state: enabled
+    permanent: yes
 ...
