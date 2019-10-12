@@ -29,4 +29,4 @@
         - username: "name of user to create on the server"
         - password: "password for the above user"
         - local_user: "local machine username"
-        - static_ip: "IP (in CIDR notaton, e.g. 10.39.25.151/24) of the local machine you want to allow SSH access from"
+        - static_ip: "IP (in CIDR notation, e.g. 10.39.25.151/24) of the local machine you want to allow SSH access from"
