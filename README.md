@@ -25,3 +25,8 @@
         - centos7.set_up : create jail log file	TAGS: [fail2ban, security]
         - centos7.set_up : use Cloudflare's DNS	TAGS: []
         - centos7.set_up : reboot the server	TAGS: []
+    - variables (set in the role's vars/main.yml):
+        - username: "name of user to create on the server"
+        - password: "password for the above user"
+        - local_user: "local machine username"
+        - static_ip: "IP (in CIDR notaton, e.g. 10.39.25.151/24) of the local machine you want to allow SSH access from"
