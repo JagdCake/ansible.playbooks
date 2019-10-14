@@ -49,3 +49,46 @@
         - openvpn_server_ip: "the address of the remote machine you're going to use as a VPN server"
         - openvpn_client_dir: "absolute path to a directory (on your machine) you want to use for OpenVPN configuration, certs and keys"
         - tls_key_name: "name for key that is going to be generated on the OpenVPN server with playbook below, e.g. jc-vpn"
+3. playbook: [remote/centos8.openvpn.yml](./remote/centos8.openvpn.yml), **depends on** [remote/centos7.set_up.yml](./remote/centos7.set_up.yml) and [local/solus.openvpn.yml](./local/solus.openvpn.yml)
+    - tasks:
+        - centos8.openvpn : install OpenVPN	TAGS: []
+        - centos8.openvpn : align the server timezone with the client timezone	TAGS: []
+        - centos8.openvpn : download EasyRSA	TAGS: []
+        - centos8.openvpn : install tar	TAGS: []
+        - centos8.openvpn : unarchive EasyRSA	TAGS: []
+        - centos8.openvpn : delete the EasyRSA archive	TAGS: []
+        - centos8.openvpn : initialize public key infrastructure	TAGS: []
+        - centos8.openvpn : install pexpect	TAGS: []
+        - centos8.openvpn : generate OpenSSL randfile	TAGS: []
+        - centos8.openvpn : create certificate authority	TAGS: []
+        - centos8.openvpn : transport client's certificate request	TAGS: []
+        - centos8.openvpn : import client's certificate request	TAGS: []
+        - centos8.openvpn : sign client's certificate request	TAGS: []
+        - centos8.openvpn : transfer signed certificate to client	TAGS: []
+        - centos8.openvpn : transfer CA certificate to client	TAGS: []
+        - centos8.openvpn : generate certificate request	TAGS: []
+        - centos8.openvpn : sign server's certificate request	TAGS: []
+        - centos8.openvpn : transfer server config file to the OpenVPN server dir	TAGS: []
+        - centos8.openvpn : generate Diffie-Hellman parameters file (takes some time)	TAGS: []
+        - centos8.openvpn : archive server config dependencies for transfer	TAGS: []
+        - centos8.openvpn : unarchive server config dependencies	TAGS: []
+        - centos8.openvpn : delete dependencies archive	TAGS: []
+        - centos8.openvpn : generate static encryption key	TAGS: []
+        - centos8.openvpn : allow OpenVPN through the firewall	TAGS: []
+        - centos8.openvpn : enable masquerading for the public zone	TAGS: []
+        - centos8.openvpn : route connections to the OpenVPN subnet	TAGS: []
+        - centos8.openvpn : restore the default target of the public zone	TAGS: []
+        - centos8.openvpn : reload firewalld	TAGS: []
+        - centos8.openvpn : enable IP forwarding	TAGS: []
+    - variables (set in the role's vars/main.yml):
+        - my_timezone: "local machine timezone, e.g. Europe/Helsinki; check your timezone with timedatectl"
+        - username: "local (client) machine username"
+        - ca_key_passphrase: "password to set up a Certificate Authority on the server"
+        - client_entity_name: "the name used to create a certificate for the client machine, same as "entity_name" from the above playbook, e.g. jc-desktop"
+        - openvpn_client_dir: "absolute path to the OpenVPN directory on the client machine"
+        - vpn_subnet: "IP address from the 10.0.0.0/8 netblock, e.g. 10.66.77.0"
+        - dns1_IP: "DNS server the client will use to connect to OpenVPN, e.g. 1.1.1.1"
+        - dns2_IP: "e.g. 1.0.0.1"
+        - tls_key_name: "has to be the same as the "tls_key_name" variable  from the above playbook, e.g. jc-vpn"
+        - server_entity_name: "common name used to create a certificate for the server, e.g. jc-server"
+        - pem_passphrase: "same password used to create a client certificate with the playbook above"
