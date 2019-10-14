@@ -55,7 +55,8 @@
     responses:
       .*Enter.*\sPassphrase:\s$: "{{ ca_key_passphrase }}"
       .*Re-Enter.*\sPassphrase:\s$: "{{ ca_key_passphrase }}"
-      .*Common\sName.*: "{{ username }}"
+      # remote machine hostname
+      .*Common\sName.*: "{{ ansible_hostname }}"
   args:
     chdir: "/etc/openvpn/{{ easyrsa.files[0] }}"
     creates: "/etc/openvpn/{{ easyrsa.files[0] }}/pki/ca.crt"
