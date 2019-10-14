@@ -10,4 +10,7 @@
 
 - name: update stable repository
   command: eopkg ur
+
+- name: upgrade all installed packages
+  command: eopkg up
 ...
