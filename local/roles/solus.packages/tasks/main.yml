@@ -1,0 +1,10 @@
+---
+- name: remove unnecessary default packages
+  command: eopkg rm "{{ item }}"
+  loop:
+    - thunderbird
+    - libreoffice-common
+    - gnome-mpv
+    - hexchat
+    - rhythmbox
+...
