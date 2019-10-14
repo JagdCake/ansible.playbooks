@@ -35,9 +35,9 @@
     enablerepo: centosplus
     state: present
 
-# TODO Fix:
-# had to do it manually, requires input
-# https://stackoverflow.com/questions/48779938/how-do-you-set-up-a-confirmation-prompt-before-running-a-task-in-a-playbook
+# TODO Update:
+# use the expect module to confirm kernel removal
+# https://docs.ansible.com/ansible/latest/modules/expect_module.html
 - name: remove the standard kernel
   yum:
     name: kernel
