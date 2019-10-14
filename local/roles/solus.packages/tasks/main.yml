@@ -13,4 +13,29 @@
 
 - name: upgrade all installed packages
   command: eopkg up
+
+- name: install system packages
+  command: eopkg it "{{ item }}"
+  loop:
+    - terminator
+    - keepassx
+    - veracrypt
+    - pigz
+    - p7zip
+    - etcher
+    - exa
+    - ripgrep
+    - fd
+    - bat
+    - rclone
+    - restic
+    - lightdm-settings
+    - dmenu
+    - psensor
+    - smartmontools
+    - yaru-gtk-theme
+    - la-capitaine-icon-theme
+    - w3m
+    - nmap
+    - glances
 ...
