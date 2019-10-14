@@ -30,3 +30,22 @@
         - password: "password for the above user"
         - local_user: "local machine username"
         - static_ip: "IP (in CIDR notation, e.g. 10.39.25.151/24) of the local machine you want to allow SSH access from"
+2. playbook: [local/solus.openvpn.yml](./local/solus.openvpn.yml)
+    - tasks:
+        - solus.openvpn : install OpenVPN	TAGS: []
+        - solus.openvpn : download EasyRSA	TAGS: []
+        - solus.openvpn : unarchive EasyRSA	TAGS: []
+        - solus.openvpn : delete the EasyRSA archive	TAGS: []
+        - solus.openvpn : initialize public key infrastructure	TAGS: []
+        - solus.openvpn : install pexpect	TAGS: []
+        - solus.openvpn : generate certificate request	TAGS: []
+        - solus.openvpn : create a directory for OpenVPN	TAGS: []
+        - solus.openvpn : transfer client config file to OpenVPN directory	TAGS: []
+        - solus.openvpn : transfer client key file to OpenVPN directory	TAGS: []
+    - variables (set in the role's vars/main.yml):
+        - username: "local machine username"
+        - entity_name: "common name used to create a certificate for the client, e.g. jc-desktop"
+        - pem_passphrase: "password used to create a certificate for the client"
+        - openvpn_server_ip: "the address of the remote machine you're going to use as a VPN server"
+        - openvpn_client_dir: "absolute path to a directory (on your machine) you want to use for OpenVPN configuration, certs and keys"
+        - tls_key_name: "name for key that is going to be generated on the OpenVPN server with playbook below, e.g. jc-vpn"
