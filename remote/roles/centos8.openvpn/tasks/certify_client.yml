@@ -8,8 +8,8 @@
 - name: import client's certificate request
   command: ./easyrsa import-req "{{ cert_req.dest }}" "{{ client_entity_name }}"
   args:
-    chdir: "/etc/openvpn/{{ easyrsa.files[0] }}"
-    creates: "/etc/openvpn/{{ easyrsa.files[0] }}/pki/reqs/{{ client_entity_name }}.req"
+    chdir: "{{ easyrsa_dir }}"
+    creates: "{{ easyrsa_dir }}/pki/reqs/{{ client_entity_name }}.req"
 
 - name: sign client's certificate request
   expect:
@@ -20,12 +20,12 @@
       # could be changed in a future version
       .*Enter.*ca.key:$: "{{ ca_key_passphrase }}"
   args:
-    chdir: "/etc/openvpn/{{ easyrsa.files[0] }}"
-    creates: "/etc/openvpn/{{ easyrsa.files[0] }}/pki/issued/{{ client_entity_name }}.crt"
+    chdir: "{{ easyrsa_dir }}"
+    creates: "{{ easyrsa_dir }}/pki/issued/{{ client_entity_name }}.crt"
 
 - name: transfer signed certificate to client
   fetch:
-    src: "/etc/openvpn/{{ easyrsa.files[0] }}/pki/issued/{{ client_entity_name }}.crt"
+    src: "{{ easyrsa_dir }}/pki/issued/{{ client_entity_name }}.crt"
     # destination dir must end with a "/"
     # so that the file is fetched into it
     dest: "{{ openvpn_client_dir }}/"
@@ -33,7 +33,7 @@
 
 - name: transfer CA certificate to client
   fetch:
-    src: "/etc/openvpn/{{ easyrsa.files[0] }}/pki/ca.crt"
+    src: "{{ easyrsa_dir }}/pki/ca.crt"
     dest: "{{ openvpn_client_dir }}/"
     flat: yes
 ...

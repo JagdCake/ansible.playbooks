@@ -16,6 +16,10 @@
     list_files: yes
   register: easyrsa
 
+- name: assign the EasyRSA location to a variable
+  set_fact:
+    easyrsa_dir: "/home/{{ username }}/Documents/{{ easyrsa.files[0] }}"
+
 - name: delete the EasyRSA archive
   file:
     path: "{{ download.dest }}"
@@ -27,8 +31,8 @@
   args:
     # cd into the directory created after unarchiving
     # the first file in the list is the root EasyRSA directory
-    chdir: "/home/{{ username }}/Documents/{{ easyrsa.files[0] }}"
-    creates: "/home/{{ username }}/Documents/{{ easyrsa.files[0] }}/pki/"
+    chdir: "{{ easyrsa_dir }}"
+    creates: "{{ easyrsa_dir }}/pki/"
 
 # needed for the "expect" module to work
 - name: install pexpect
@@ -47,6 +51,6 @@
       .*Verifying.*\sphrase:\s$: "{{ pem_passphrase }}"
       .*Common\sName.*: "{{ entity_name }}"
   args:
-    chdir: "/home/{{ username }}/Documents/{{ easyrsa.files[0] }}"
-    creates: "/home/{{ username }}/Documents/{{ easyrsa.files[0] }}/pki/reqs/{{ entity_name }}.req"
+    chdir: "{{ easyrsa_dir }}"
+    creates: "{{ easyrsa_dir }}/pki/reqs/{{ entity_name }}.req"
 ...

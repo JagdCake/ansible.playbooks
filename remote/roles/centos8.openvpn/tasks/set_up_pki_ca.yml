@@ -21,6 +21,10 @@
     list_files: yes
   register: easyrsa
 
+- name: assign the EasyRSA location to a variable
+  set_fact:
+    easyrsa_dir: "/etc/openvpn/{{ easyrsa.files[0] }}"
+
 - name: delete the EasyRSA archive
   file:
     path: "{{ download.dest }}"
@@ -32,8 +36,8 @@
   args:
     # cd into the directory created after unarchiving
     # the first file in the list is the root EasyRSA directory
-    chdir: "/etc/openvpn/{{ easyrsa.files[0] }}"
-    creates: "/etc/openvpn/{{ easyrsa.files[0] }}/pki/"
+    chdir: "{{ easyrsa_dir }}"
+    creates: "{{ easyrsa_dir }}/pki/"
 
 # needed for the "expect" module to work
 - name: install pexpect
@@ -46,8 +50,8 @@
 - name: generate OpenSSL randfile
   command: dd if=/dev/urandom of=pki/.rnd bs=256 count=1
   args:
-    chdir: "/etc/openvpn/{{ easyrsa.files[0] }}"
-    creates: "/etc/openvpn/{{ easyrsa.files[0] }}/pki/.rnd"
+    chdir: "{{ easyrsa_dir }}"
+    creates: "{{ easyrsa_dir }}/pki/.rnd"
 
 - name: create certificate authority
   expect:
@@ -58,6 +62,6 @@
       # remote machine hostname
       .*Common\sName.*: "{{ ansible_hostname }}"
   args:
-    chdir: "/etc/openvpn/{{ easyrsa.files[0] }}"
-    creates: "/etc/openvpn/{{ easyrsa.files[0] }}/pki/ca.crt"
+    chdir: "{{ easyrsa_dir }}"
+    creates: "{{ easyrsa_dir }}/pki/ca.crt"
 ...
