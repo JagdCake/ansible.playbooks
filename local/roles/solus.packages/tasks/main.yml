@@ -1,12 +1,7 @@
 ---
 - name: remove unnecessary default packages
   command: eopkg rm "{{ item }}"
-  loop:
-    - thunderbird
-    - libreoffice-common
-    - gnome-mpv
-    - hexchat
-    - rhythmbox
+  with_items: "{{ items_to_remove }}"
 
 - name: update stable repository
   command: eopkg ur
@@ -16,26 +11,5 @@
 
 - name: install system packages
   command: eopkg it "{{ item }}"
-  loop:
-    - terminator
-    - keepassx
-    - veracrypt
-    - pigz
-    - p7zip
-    - etcher
-    - exa
-    - ripgrep
-    - fd
-    - bat
-    - rclone
-    - restic
-    - lightdm-settings
-    - dmenu
-    - psensor
-    - smartmontools
-    - yaru-gtk-theme
-    - la-capitaine-icon-theme
-    - w3m
-    - nmap
-    - glances
+  with_items: "{{ system }}"
 ...
