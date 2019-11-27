@@ -15,4 +15,8 @@
 
 - name: install base development tools
   command: eopkg it -c system.devel
+
+- name: install work tools
+  command: eopkg it "{{ item }}"
+  with_items: "{{ tools }}"
 ...
