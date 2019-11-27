@@ -28,4 +28,9 @@
   command: pip3 install --user "{{ item }}"
   with_items: "{{ python }}"
   become: no
+
+- name: install Node.js packages
+  command: npm install -g "{{ item }}"
+  with_items: "{{ nodejs }}"
+  become: no
 ...
