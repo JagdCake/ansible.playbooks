@@ -19,4 +19,8 @@
 - name: install work tools
   command: eopkg it "{{ item }}"
   with_items: "{{ tools }}"
+
+- name: install media apps
+  command: eopkg it "{{ item }}"
+  with_items: "{{ media }}"
 ...
