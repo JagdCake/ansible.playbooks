@@ -12,4 +12,7 @@
 - name: install system packages
   command: eopkg it "{{ item }}"
   with_items: "{{ system }}"
+
+- name: install base development tools
+  command: eopkg it -c system.devel
 ...
