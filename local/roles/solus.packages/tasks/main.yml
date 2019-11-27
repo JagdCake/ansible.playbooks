@@ -23,4 +23,9 @@
 - name: install media apps
   command: eopkg it "{{ item }}"
   with_items: "{{ media }}"
+
+- name: install python packages
+  command: pip3 install --user "{{ item }}"
+  with_items: "{{ python }}"
+  become: no
 ...
