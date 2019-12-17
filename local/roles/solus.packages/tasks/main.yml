@@ -37,4 +37,9 @@
 - name: install Haskell
   pause:
     prompt: https://docs.haskellstack.org/en/stable/README/
+
+- name: install Haskell libraries
+  command: stack install --resolver=lts "{{ item }}"
+  with_items: "{{ haskell }}"
+  become: no
 ...
