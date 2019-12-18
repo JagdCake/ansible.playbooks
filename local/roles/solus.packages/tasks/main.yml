@@ -42,4 +42,9 @@
   command: stack install --resolver=lts "{{ item }}"
   with_items: "{{ haskell }}"
   become: no
+
+- name: install Ruby gems
+  command: gem install "{{ item }}"
+  with_items: "{{ ruby }}"
+  become: no
 ...
