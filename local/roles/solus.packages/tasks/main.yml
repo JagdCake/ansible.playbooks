@@ -10,18 +10,18 @@
   command: eopkg up
 
 - name: install system packages
-  command: eopkg it "{{ item }}"
+  command: eopkg it -y "{{ item }}"
   with_items: "{{ system }}"
 
 - name: install base development tools
   command: eopkg it -c system.devel
 
 - name: install work tools
-  command: eopkg it "{{ item }}"
+  command: eopkg it -y "{{ item }}"
   with_items: "{{ tools }}"
 
 - name: install media apps
-  command: eopkg it "{{ item }}"
+  command: eopkg it -y "{{ item }}"
   with_items: "{{ media }}"
 
 - name: install python packages
