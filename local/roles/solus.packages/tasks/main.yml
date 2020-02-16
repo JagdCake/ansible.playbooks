@@ -38,6 +38,10 @@
   pause:
     prompt: https://docs.haskellstack.org/en/stable/README/
 
+- name: update stack package index
+  command: stack update
+  become: no
+
 - name: install Haskell libraries
   command: stack install --resolver=lts "{{ item }}"
   with_items: "{{ haskell }}"
