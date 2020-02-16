@@ -48,7 +48,7 @@
   become: no
 
 - name: install Ruby gems
-  command: gem install "{{ item }}"
+  command: gem install --user-install "{{ item }}"
   with_items: "{{ ruby }}"
   become: no
 ...
