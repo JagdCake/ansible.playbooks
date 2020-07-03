@@ -1,5 +1,5 @@
 ### Directory structure
-1. [local](./local) is used for playbooks that execute tasks on the host or my personal machine. Currently contains a single playbook for installing and setting up OpenVPN.
+1. [local](./local) is used for playbooks that execute tasks on the host or my personal machine. Contains a playbook for installing and setting up OpenVPN client and a playbook to install / remove packages after reinstalling Solus.
 2. [remote](./remote) playbooks execute tasks on remote servers / virtual machines. Mainly used on a CentOS 7 VPS; most of the tasks work fine on CentOS 8 too. Playbooks prepended with `centos7` need some work, while the playbook which sets up an OpenVPN server is pretty much done.
 
 ### Playbook overview
@@ -50,7 +50,35 @@
         - openvpn_server_ip: "the address of the remote machine you're going to use as a VPN server"
         - openvpn_client_dir: "absolute path to a directory (on your machine) you want to use for OpenVPN configuration, certs and keys"
         - tls_key_name: "name for key that is going to be generated on the OpenVPN server with playbook below, e.g. jc-vpn"
-3. playbook: [remote/centos8.openvpn.yml](./remote/centos8.openvpn.yml), **depends on** [remote/centos7.set_up.yml](./remote/centos7.set_up.yml) and [local/solus.openvpn.yml](./local/solus.openvpn.yml)
+3. playbook [local/solus.packages.yml](./local/solus.packages.yml)
+    - tasks:
+        - solus.packages : remove unnecessary default packages	TAGS: []
+        - solus.packages : update stable repository	TAGS: []
+        - solus.packages : upgrade all installed packages	TAGS: []
+        - solus.packages : install system packages	TAGS: []
+        - solus.packages : install base development tools	TAGS: []
+        - solus.packages : install work tools	TAGS: []
+        - solus.packages : install media apps	TAGS: []
+        - solus.packages : install python packages	TAGS: []
+        - solus.packages : install Node.js packages	TAGS: []
+        - solus.packages : install Haskell	TAGS: []
+        - solus.packages : update stack package index	TAGS: []
+        - solus.packages : install Haskell libraries	TAGS: []
+        - solus.packages : install Ruby gems	TAGS: []
+    - variables (set in the role's vars/main.yml):
+        - items_to_remove: "list of default packages to remove"
+        - system: "list of system packages to install; e.g. alacritty,
+          ripgrep, rclone"
+        - tools: "list of tools to install; e.g. git,
+          neovim, tmux"
+        - media: "list of media application packages to install; e.g.
+          mpv, steam, lutris"
+        - python: "list of python packages to install with pip3'
+        - nodejs: "list of Node.js packages to install (globally) using
+          npm"
+        - haskell: "list of Haskell packages to install using stack"
+        - ruby: "list of Ruby gems to install"
+4. playbook: [remote/centos8.openvpn.yml](./remote/centos8.openvpn.yml), **depends on** [remote/centos7.set_up.yml](./remote/centos7.set_up.yml) and [local/solus.openvpn.yml](./local/solus.openvpn.yml)
     - tasks:
         - centos8.openvpn : install OpenVPN	TAGS: []
         - centos8.openvpn : align the server timezone with the client timezone	TAGS: []
