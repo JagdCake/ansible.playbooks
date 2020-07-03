@@ -16,7 +16,6 @@
 - name: allow access to SSH only from my IP
   firewalld:
     source: "{{ static_ip }}"
-    port: 22/tcp
     zone: dmz
     state: enabled
     permanent: yes
