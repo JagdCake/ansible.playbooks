@@ -51,4 +51,9 @@
   command: gem install --user-install "{{ item }}"
   with_items: "{{ ruby }}"
   become: no
+
+- name: install Rust crates
+  command: cargo install "{{ item }}"
+  with_items: "{{ rust }}"
+  become: no
 ...
