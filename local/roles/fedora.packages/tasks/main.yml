@@ -26,6 +26,7 @@
   dnf:
     name: "{{ tools }}"
     state: present
+  notify: "install vim-plug"
 
 - name: install media apps
   dnf:
