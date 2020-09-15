@@ -1,5 +1,5 @@
 ### Directory structure
-1. [local](./local) is used for playbooks that execute tasks on the host or my personal machine. Contains a playbook for installing and setting up OpenVPN client and a playbook to install / remove packages after reinstalling Solus.
+1. [local](./local) is used for playbooks that execute tasks on the host or my personal machine. Contains a playbook for installing and setting up OpenVPN client and playbooks to install / remove packages after installing Solus / Fedora.
 2. [remote](./remote) playbooks execute tasks on remote servers / virtual machines. Mainly used on a CentOS 7 VPS; most of the tasks work fine on CentOS 8 too. Playbooks prepended with `centos7` need some work, while the playbook which sets up an OpenVPN server is pretty much done.
 
 ### Playbook overview
@@ -122,3 +122,33 @@
         - tls_key_name: "has to be the same as the "tls_key_name" variable  from the above playbook, e.g. jc-vpn"
         - server_entity_name: "common name used to create a certificate for the server, e.g. jc-server"
         - pem_passphrase: "same password used to create a client certificate with the playbook above"
+5. playbook: [local/fedora.packages.yml](./local/fedora.packages.yml)
+    - tasks:
+        - fedora.packages : remove unnecessary default packages	TAGS: []
+        - fedora.packages : upgrade all installed packages	TAGS: []
+        - fedora.packages : enable the free and nonfree RPM Fusion repositories	TAGS: []
+        - fedora.packages : install system packages	TAGS: []
+        - fedora.packages : install work packages	TAGS: []
+        - fedora.packages : install media apps	TAGS: []
+        - fedora.packages : install python packages	TAGS: []
+        - fedora.packages : install Node.js packages	TAGS: []
+        - fedora.packages : download stack (Haskell package tool)	TAGS: []
+        - fedora.packages : install stack	TAGS: []
+        - fedora.packages : update stack's package index	TAGS: []
+        - fedora.packages : install Haskell libraries	TAGS: []
+        - fedora.packages : install Ruby gems	TAGS: []
+        - fedora.packages : install Rust crates	TAGS: []
+    - variables (set in the role's vars/main.yml):
+        - packages_to_remove: "list of default packages to remove"
+        - system: "list of system packages to install; e.g. alacritty,
+          ripgrep, rclone"
+        - tools: "list of tools to install; e.g. git,
+          neovim, tmux"
+        - media: "list of media application packages to install; e.g.
+          mpv, steam, lutris"
+        - python: "list of Python packages to install with pip3'
+        - nodejs: "list of Node.js packages to install (globally) using
+          npm"
+        - haskell: "list of Haskell packages to install using stack"
+        - ruby: "list of Ruby gems to install"
+        - rust: "list of Cargo crates to install"
