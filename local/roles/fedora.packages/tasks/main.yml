@@ -40,6 +40,20 @@
     extra_args: --user
   become: no
 
+- name: create directory for global NPM packages
+  file:
+    path: "{{ ansible_user_dir }}/.npm-global"
+    state: directory
+  become: no
+
+- name: configure NPM to use the created directory to install global packages
+  lineinfile:
+    path: "{{ ansible_user_dir }}/.npmrc"
+    create: yes
+    line: prefix=~/.npm-global
+    state: present
+  become: no
+
 - name: install Node.js packages
   npm:
     name: "{{ item }}"

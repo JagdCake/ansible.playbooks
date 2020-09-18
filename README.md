@@ -131,6 +131,8 @@
         - fedora.packages : install work packages	TAGS: []
         - fedora.packages : install media apps	TAGS: []
         - fedora.packages : install python packages	TAGS: []
+        - fedora.packages : create directory for global NPM packages	TAGS: []
+        - fedora.packages : configure NPM to use the created directory to install global packages	TAGS: []
         - fedora.packages : install Node.js packages	TAGS: []
         - fedora.packages : download stack (Haskell package tool)	TAGS: []
         - fedora.packages : install stack	TAGS: []
