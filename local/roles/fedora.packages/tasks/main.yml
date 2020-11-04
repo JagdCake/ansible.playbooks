@@ -10,6 +10,8 @@
     state: latest
     update_cache: yes
 
+- import_tasks: ./minimal-kde.yml
+
 - name: enable the free and nonfree RPM Fusion repositories
   dnf:
     name:
