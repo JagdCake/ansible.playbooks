@@ -69,6 +69,8 @@
 
 - name: install stack
   command: sh /tmp/get-stack.sh
+  args:
+    creates: /usr/local/bin/stack
 
 - name: update stack's package index
   command: stack update
