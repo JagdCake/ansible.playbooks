@@ -1,5 +1,6 @@
 ### Playbook overview
 1. playbook: [remote/centos7.set_up.yml](./remote/centos7.set_up.yml)
+   performs initial server setup: basic security, package updates
     - tasks:
         - centos7.set_up : create a new user	TAGS: []
         - centos7.set_up : give the new user root privileges	TAGS: []
@@ -26,7 +27,8 @@
         - password: "password for the above user"
         - local_user: "local machine username"
         - static_ip: "IP (in CIDR notation, e.g. 10.39.25.151/24) of the local machine you want to allow SSH access from"
-2. playbook: [local/solus.openvpn.yml](./local/solus.openvpn.yml)
+2. playbook: [local/solus.openvpn.yml](./local/solus.openvpn.yml) sets
+   up a OpenVPN client
     - tasks:
         - solus.openvpn : install OpenVPN	TAGS: []
         - solus.openvpn : download EasyRSA	TAGS: []
@@ -47,6 +49,7 @@
         - openvpn_client_dir: "absolute path to a directory (on your machine) you want to use for OpenVPN configuration, certs and keys"
         - tls_key_name: "name for key that is going to be generated on the OpenVPN server with playbook below, e.g. jc-vpn"
 3. playbook [local/solus.packages.yml](./local/solus.packages.yml)
+   removes, updates, installs packages after a fresh install
     - tasks:
         - solus.packages : remove unnecessary default packages	TAGS: []
         - solus.packages : update stable repository	TAGS: []
@@ -74,7 +77,11 @@
           npm"
         - haskell: "list of Haskell packages to install using stack"
         - ruby: "list of Ruby gems to install"
-4. playbook: [remote/centos8.openvpn.yml](./remote/centos8.openvpn.yml), **depends on** [remote/centos7.set_up.yml](./remote/centos7.set_up.yml) and [local/solus.openvpn.yml](./local/solus.openvpn.yml)
+4. playbook: [remote/centos8.openvpn.yml](./remote/centos8.openvpn.yml),
+   **depends on**
+   [remote/centos7.set_up.yml](./remote/centos7.set_up.yml) and
+   [local/solus.openvpn.yml](./local/solus.openvpn.yml) sets up a
+   OpenVPN server
     - tasks:
         - centos8.openvpn : install OpenVPN	TAGS: []
         - centos8.openvpn : align the server timezone with the client timezone	TAGS: []
@@ -119,6 +126,7 @@
         - server_entity_name: "common name used to create a certificate for the server, e.g. jc-server"
         - pem_passphrase: "same password used to create a client certificate with the playbook above"
 5. playbook: [local/fedora.packages.yml](./local/fedora.packages.yml)
+   removes, updates, installs packages after a fresh install
     - tasks:
         - fedora.packages : remove unnecessary default packages	TAGS: []
         - fedora.packages : upgrade all installed packages	TAGS: []
