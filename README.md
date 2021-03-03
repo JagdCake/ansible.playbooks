@@ -130,6 +130,7 @@
     - tasks:
         - fedora.packages : remove unnecessary default packages	TAGS: []
         - fedora.packages : upgrade all installed packages	TAGS: []
+        - fedora.packages : install required packages for a minimal KDE install	TAGS: []
         - fedora.packages : enable the free and nonfree RPM Fusion repositories	TAGS: []
         - fedora.packages : install system packages	TAGS: []
         - fedora.packages : install work packages	TAGS: []
